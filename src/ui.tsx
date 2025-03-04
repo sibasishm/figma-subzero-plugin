@@ -10,8 +10,6 @@ import {
 import { emit } from '@create-figma-plugin/utilities';
 import { h, Fragment } from 'preact';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
-import { highlight, languages } from 'prismjs';
-import Editor from 'react-simple-code-editor';
 
 import {
 	InsertCodeHandler,

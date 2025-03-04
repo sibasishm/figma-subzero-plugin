@@ -2,7 +2,6 @@
 	"name": "figma-subzero-plugin",
 	"version": "1.0.0",
 	"description": "Convert Figma components to Subzero React components",
-	"main": "build/main.js",
 	"scripts": {
 		"build": "build-figma-plugin --typecheck --minify",
 		"watch": "build-figma-plugin --typecheck --watch",
@@ -19,18 +18,16 @@
 		"@create-figma-plugin/build": "^2.6.1",
 		"@create-figma-plugin/tsconfig": "^2.6.1",
 		"@figma/plugin-typings": "^1.82.0",
-		"@types/node": "^20.11.19",
-		"@types/prismjs": "^1.26.3",
-		"@types/react": "^18.2.57",
 		"@typescript-eslint/eslint-plugin": "^7.0.1",
 		"@typescript-eslint/parser": "^7.0.1",
 		"eslint": "^8.56.0",
 		"typescript": "^5.3.3"
 	},
 	"figma-plugin": {
+		"editorType": ["figma"],
 		"id": "figma-subzero-plugin",
 		"name": "Figma Subzero Plugin",
-		"main": "build/main.js",
-		"ui": "build/ui.js"
+		"main": "src/main.ts",
+		"ui": "src/ui.tsx"
 	}
 }
