@@ -1,5 +1,3 @@
-import '!prismjs/themes/prism.css';
-
 import {
 	Button,
 	Container,
@@ -7,6 +5,7 @@ import {
 	Text,
 	VerticalSpace,
 	TextboxMultiline,
+	Toggle,
 } from '@create-figma-plugin/ui';
 import { emit } from '@create-figma-plugin/utilities';
 import { h, Fragment } from 'preact';
@@ -14,7 +13,6 @@ import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { highlight, languages } from 'prismjs';
 import Editor from 'react-simple-code-editor';
 
-import styles from './styles.css';
 import {
 	InsertCodeHandler,
 	MessageToUI,
@@ -32,6 +30,7 @@ export default function UI() {
 		withStyles: true,
 		withVariants: true,
 		generateInterface: true,
+		useSubzeroProps: true,
 	});
 
 	// Handle messages from the plugin
@@ -68,6 +67,13 @@ export default function UI() {
 		emit<InsertCodeHandler>('INSERT_CODE', generatedCode);
 	}, [generatedCode]);
 
+	const handleOptionChange = useCallback(
+		(key: keyof TransformOptions) => (value: boolean) => {
+			setOptions(prev => ({ ...prev, [key]: value }));
+		},
+		[]
+	);
+
 	return (
 		<Container space='medium'>
 			<VerticalSpace space='large' />
@@ -78,7 +84,41 @@ export default function UI() {
 					: 'Select components in Figma to transform'}
 			</Text>
 
+			<VerticalSpace space='medium' />
+
+			<Columns space='small'>
+				<Toggle
+					value={options.withStyles}
+					onValueChange={handleOptionChange('withStyles')}
+				>
+					Include styles
+				</Toggle>
+				<Toggle
+					value={options.withVariants}
+					onValueChange={handleOptionChange('withVariants')}
+				>
+					Include variants
+				</Toggle>
+			</Columns>
+
 			<VerticalSpace space='small' />
+
+			<Columns space='small'>
+				<Toggle
+					value={options.generateInterface}
+					onValueChange={handleOptionChange('generateInterface')}
+				>
+					Generate TypeScript interfaces
+				</Toggle>
+				<Toggle
+					value={options.useSubzeroProps}
+					onValueChange={handleOptionChange('useSubzeroProps')}
+				>
+					Use Subzero props
+				</Toggle>
+			</Columns>
+
+			<VerticalSpace space='medium' />
 
 			{error && (
 				<Fragment>
