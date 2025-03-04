@@ -5,7 +5,6 @@
 	"scripts": {
 		"build": "build-figma-plugin --typecheck --minify",
 		"dev": "build-figma-plugin --typecheck --watch",
-		"watch": "build-figma-plugin --typecheck --watch",
 		"lint": "eslint . --ext .ts,.tsx"
 	},
 	"author": "Sibasish",
