@@ -1,6 +1,6 @@
 # Figma Subzero Plugin
 
-Convert Figma components to React components using Subzero Design System.
+Convert Figma components to React components using Subzero Design System and Material-UI (MUI).
 
 ## Features
 
@@ -8,7 +8,13 @@ Convert Figma components to React components using Subzero Design System.
 - Preserve styles and component variants
 - Support for basic components (Button, Typography, Box, Stack)
 - Auto-mapping of Figma styles to MUI style props
+- Hot reload support for development
 - TypeScript support
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org) – v20
+- [Figma desktop app](https://figma.com/downloads/)
 
 ## Installation
 
@@ -35,33 +41,61 @@ npm run build
    - Go to Plugins > Development > Import plugin from manifest
    - Select the `manifest.json` file from this project
 
-## Usage
+## Development
 
-1. Select elements in Figma that you want to convert
-2. Right-click > Plugins > Subzero Plugin
-3. Click "Transform" to generate React code
-4. Click "Copy Code" to copy the generated code
+### Quick Start
+```bash
+# Watch mode with hot reload
+npm run watch
+
+# Production build
+npm run build
+
+# Lint code
+npm run lint
+```
+
+### Debugging
+- Use `console.log` statements for debugging
+- Access developer console in Figma via Quick Actions: `Show/Hide Console`
+- Check build output in `build/` directory
+- Monitor hot reload logs in terminal
 
 ## Component Mapping
 
-- Figma Rectangle → Subzero Box
-- Figma Text → Subzero Typography
-- Figma Group → Subzero Stack
-- Figma Component Instance → Subzero Button (for now)
+Current supported mappings:
+- Figma Rectangle → MUI Box
+- Figma Text → MUI Typography
+- Figma Group → MUI Stack
+- Figma Component Instance → MUI Button
 
-## Development
+## Project Structure
 
-- `npm run watch` - Watch for code changes and rebuild
-- `npm run build` - Build the plugin
-- `npm run lint` - Lint the code
+```
+figma-subzero-plugin/
+├── src/
+│   ├── main.ts         # Plugin main logic
+│   ├── ui.tsx          # Plugin UI components
+│   ├── types.ts        # TypeScript definitions
+│   └── utils/          # Utility functions
+├── build/              # Build output (gitignored)
+├── manifest.json       # Plugin manifest
+└── package.json        # Project dependencies
+```
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'feat: Add some amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+## Resources
+
+- [Create Figma Plugin docs](https://yuanqing.github.io/create-figma-plugin/)
+- [Figma Plugin API docs](https://figma.com/plugin-docs/)
+- [Material-UI docs](https://mui.com/material-ui/)
 
 ## License
 
