@@ -1,0 +1,15 @@
+{
+  "api": "1.0.0",
+  "editorType": ["figma"],
+  "id": "figma-subzero-plugin",
+  "name": "Figma Subzero Plugin",
+  "main": "build/main.js",
+  "ui": "build/ui.js",
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  },
+  "documentAccess": "dynamic-page",
+  "capabilities": ["inspect", "codegen"],
+  "enableProposedApi": false,
+  "permissions": []
+}
