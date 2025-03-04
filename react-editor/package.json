@@ -1,0 +1,37 @@
+{
+  "dependencies": {
+    "@create-figma-plugin/ui": "^3.2.1",
+    "@create-figma-plugin/utilities": "^3.2.1",
+    "preact": ">=10",
+    "prismjs": "1.29.0",
+    "react-simple-code-editor": "0.13.1"
+  },
+  "devDependencies": {
+    "@create-figma-plugin/build": "^3.2.1",
+    "@create-figma-plugin/tsconfig": "^3.2.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@figma/plugin-typings": "1.100.2",
+    "@mui/material": "^5.16.14",
+    "@types/prismjs": "1.26.3",
+    "@types/react": "^18.3.18",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.0",
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
+  },
+  "scripts": {
+    "build": "build-figma-plugin --typecheck --minify",
+    "watch": "build-figma-plugin --typecheck --watch"
+  },
+  "figma-plugin": {
+    "editorType": [
+      "figma"
+    ],
+    "id": "react-editor",
+    "name": "React Editor",
+    "main": "src/main.ts",
+    "ui": "src/ui.tsx"
+  }
+}

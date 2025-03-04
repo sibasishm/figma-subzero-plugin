@@ -1,0 +1,10 @@
+.container {
+	padding: 16px;
+}
+
+.editor {
+	font-family: monospace;
+	font-size: 12px;
+	line-height: 1.5;
+	width: 100%;
+}
