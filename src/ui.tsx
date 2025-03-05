@@ -31,23 +31,28 @@ export default function UI() {
 		useSubzeroProps: true,
 	});
 
-	// Handle messages from the plugin
-	window.onmessage = (event: MessageEvent) => {
-		const message = event.data.pluginMessage as MessageToUI;
+	useEffect(() => {
+		function handleMessage(event: MessageEvent<any>) {
+			const message = event.data.pluginMessage as MessageToUI;
+			if (!message) return;
 
-		if (message.type === 'error') {
-			setError(message.error || 'Unknown error occurred');
-			return;
-		}
-
-		if (message.type === 'selection') {
-			setSelectedComponents(message.components);
-			if (message.code) {
-				setGeneratedCode(message.code);
+			if (message.type === 'error') {
+				setError(message.error || 'Unknown error occurred');
+				return;
 			}
-			setError(null);
+
+			if (message.type === 'selection') {
+				setSelectedComponents(message.components || []);
+				if (message.code) {
+					setGeneratedCode(message.code);
+				}
+				setError(null);
+			}
 		}
-	};
+
+		window.addEventListener('message', handleMessage);
+		return () => window.removeEventListener('message', handleMessage);
+	}, []);
 
 	const handleTransform = useCallback(() => {
 		parent.postMessage(
