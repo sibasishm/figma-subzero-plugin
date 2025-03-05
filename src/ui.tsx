@@ -10,7 +10,7 @@ import {
 } from '@create-figma-plugin/ui';
 import { emit } from '@create-figma-plugin/utilities';
 import { h, Fragment } from 'preact';
-import { useCallback, useEffect, useState } from 'preact/hooks';
+import { useCallback, useEffect, useState, useRef } from 'preact/hooks';
 
 import {
 	InsertCodeHandler,
@@ -25,6 +25,8 @@ function Plugin() {
 	>([]);
 	const [generatedCode, setGeneratedCode] = useState<string>('');
 	const [error, setError] = useState<string | null>(null);
+	const [isCopied, setIsCopied] = useState(false);
+	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 	const [options, setOptions] = useState<TransformOptions>({
 		withStyles: true,
 		withVariants: true,
@@ -66,7 +68,25 @@ function Plugin() {
 	}, [options]);
 
 	const handleInsertCode = useCallback(() => {
-		emit<InsertCodeHandler>('INSERT_CODE', generatedCode);
+		try {
+			// Create temporary textarea
+			const el = document.createElement('textarea');
+			el.value = generatedCode;
+			el.setAttribute('readonly', '');
+			el.style.position = 'absolute';
+			el.style.left = '-9999px';
+			document.body.appendChild(el);
+			el.select();
+			document.execCommand('copy');
+			document.body.removeChild(el);
+
+			emit<InsertCodeHandler>('INSERT_CODE', generatedCode);
+			setIsCopied(true);
+			setTimeout(() => setIsCopied(false), 2000);
+		} catch (err) {
+			console.error('Failed to copy code to clipboard', err);
+			setError('Failed to copy code to clipboard');
+		}
 	}, [generatedCode]);
 
 	const handleOptionChange = useCallback(
@@ -147,7 +167,7 @@ function Plugin() {
 					/>
 					<VerticalSpace space='small' />
 					<Button fullWidth onClick={handleInsertCode}>
-						Copy Code
+						{isCopied ? '✓ Copied!' : 'Copy Code'}
 					</Button>
 				</Fragment>
 			)}

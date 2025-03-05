@@ -30,8 +30,9 @@ export interface MessageToUI {
 }
 
 export interface MessageToPlugin {
-  type: 'transform';
-  options: TransformOptions;
+  type: 'transform' | 'INSERT_CODE';
+  options?: TransformOptions;
+  code?: string;
 }
 
 // Subzero component types mapping

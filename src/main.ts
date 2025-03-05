@@ -72,6 +72,11 @@ export default function () {
         } as MessageToUI)
       }
     }
+
+    if (msg.type === 'INSERT_CODE') {
+      console.log('📋 Copying code:', msg.code)
+      figma.closePlugin(`Generated code: ${msg.code}`)
+    }
   }
 
   showUI({
