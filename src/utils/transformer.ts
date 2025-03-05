@@ -120,8 +120,48 @@ const mapSpacing = (value: number): SubzeroProps['spacing'] => {
   return closest.token as SubzeroProps['spacing'];
 };
 
+const findClosestColor = (figmaColor: RGB): SubzeroProps['color'] => {
+  const rgbToHex = (r: number, g: number, b: number): string => {
+    const toHex = (c: number) => {
+      const hex = Math.round(c * 255).toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    };
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  };
+
+  const hexColor = rgbToHex(figmaColor.r, figmaColor.g, figmaColor.b);
+
+  // Compare with our color tokens
+  type ColorKey = keyof typeof COLOR_TOKENS;
+
+  const colorMatches = Object.entries(COLOR_TOKENS).map(([name, variants]) => {
+    if (name === 'text') {
+      const textVariants = variants as typeof COLOR_TOKENS['text'];
+      if (hexColor === textVariants.primary) return 'text.primary';
+      if (hexColor === textVariants.secondary) return 'text.secondary';
+      return null;
+    }
+
+    const colorVariants = variants as { main: string; light: string; dark: string };
+    if (hexColor === colorVariants.main) return name as ColorKey;
+    if (hexColor === colorVariants.light) return name as ColorKey;
+    if (hexColor === colorVariants.dark) return name as ColorKey;
+    return null;
+  }).filter(Boolean);
+
+  return (colorMatches[0] || 'primary') as SubzeroProps['color'];
+};
+
 const extractSubzeroProps = (element: SceneNode): Partial<SubzeroProps> => {
   const props: Partial<SubzeroProps> = {};
+
+  // Handle fills for color
+  if ('fills' in element && Array.isArray(element.fills) && element.fills.length > 0) {
+    const fill = element.fills[0];
+    if (fill.type === 'SOLID' && fill.color) {
+      props.color = findClosestColor(fill.color);
+    }
+  }
 
   if ('componentProperties' in element) {
     const componentProps = element.componentProperties;
@@ -132,8 +172,8 @@ const extractSubzeroProps = (element: SceneNode): Partial<SubzeroProps> => {
       props.variant = variantValue as SubzeroProps['variant'];
     }
 
-    // Extract color
-    if ('color' in componentProps) {
+    // Extract color from component properties if not already set
+    if ('color' in componentProps && !props.color) {
       const colorValue = String(componentProps.color.value);
       props.color = colorValue as SubzeroProps['color'];
     }
