@@ -50,19 +50,30 @@ export enum SubzeroComponentType {
   Divider = 'Divider',
   Paper = 'Paper',
   Container = 'Container',
-  Grid = 'Grid'
+  Grid = 'Grid',
+  Link = 'Link',
+  List = 'List',
+  ListItem = 'ListItem',
+  Menu = 'Menu',
+  MenuItem = 'MenuItem',
+  Tabs = 'Tabs',
+  Tab = 'Tab'
 }
 
 // Subzero specific props mapping
 export interface SubzeroProps {
-  color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
-  variant?: 'text' | 'contained' | 'outlined';
+  color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'text.primary' | 'text.secondary';
+  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2' | 'button' | 'caption' | 'overline' |
+  'text' | 'contained' | 'outlined';
   size?: 'small' | 'medium' | 'large';
   fullWidth?: boolean;
   disabled?: boolean;
-  elevation?: number;
-  spacing?: number | string;
-  direction?: 'row' | 'column';
-  alignItems?: 'flex-start' | 'center' | 'flex-end' | 'stretch';
-  justifyContent?: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around';
+  elevation?: 0 | 1 | 2 | 3 | 4 | 5;
+  spacing?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+  direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
+  alignItems?: 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'baseline';
+  justifyContent?: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around' | 'space-evenly';
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  gutterBottom?: boolean;
+  noWrap?: boolean;
 }
