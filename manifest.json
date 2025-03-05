@@ -1,1 +1,1 @@
-{"api":"1.0.0","editorType":["figma"],"id":"figma-subzero-plugin","name":"Figma Subzero Plugin","main":"build/main.js","ui":"build/ui.js"}
+{"api":"1.0.0","editorType":["figma","dev"],"id":"figma-subzero-plugin","name":"Figma Subzero Plugin","main":"build/main.js","ui":"build/ui.js","capabilities":["inspect","codegen"],"networkAccess":{"allowedDomains":["none"]},"documentAccess":"dynamic-page","codegenLanguages":[{"label":"TypeScript/React","value":"typescript/react"}]}
