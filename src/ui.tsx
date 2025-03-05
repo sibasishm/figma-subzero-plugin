@@ -6,10 +6,11 @@ import {
 	VerticalSpace,
 	TextboxMultiline,
 	Toggle,
+	render,
 } from '@create-figma-plugin/ui';
 import { emit } from '@create-figma-plugin/utilities';
 import { h, Fragment } from 'preact';
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import { useCallback, useEffect, useState } from 'preact/hooks';
 
 import {
 	InsertCodeHandler,
@@ -18,7 +19,7 @@ import {
 	TransformOptions,
 } from './types';
 
-export default function UI() {
+function Plugin() {
 	const [selectedComponents, setSelectedComponents] = useState<
 		MessageToUI['components']
 	>([]);
@@ -32,7 +33,7 @@ export default function UI() {
 	});
 
 	useEffect(() => {
-		function handleMessage(event: MessageEvent<any>) {
+		const handleMessage = (event: MessageEvent<any>) => {
 			const message = event.data.pluginMessage as MessageToUI;
 			if (!message) return;
 
@@ -43,12 +44,10 @@ export default function UI() {
 
 			if (message.type === 'selection') {
 				setSelectedComponents(message.components || []);
-				if (message.code) {
-					setGeneratedCode(message.code);
-				}
+				setGeneratedCode(message.code || '');
 				setError(null);
 			}
-		}
+		};
 
 		window.addEventListener('message', handleMessage);
 		return () => window.removeEventListener('message', handleMessage);
@@ -157,3 +156,5 @@ export default function UI() {
 		</Container>
 	);
 }
+
+export default render(Plugin);
