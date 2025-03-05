@@ -10,9 +10,6 @@ export interface SubzeroComponent {
   props: Record<string, any>;
   styles: Record<string, any>;
   children?: SubzeroComponent[];
-  variant?: string;
-  color?: string;
-  size?: 'small' | 'medium' | 'large';
 }
 
 export interface TransformOptions {
@@ -24,15 +21,13 @@ export interface TransformOptions {
 
 export interface MessageToUI {
   type: 'selection' | 'error';
-  components?: SubzeroComponent[];
   error?: string;
   code?: string;
 }
 
 export interface MessageToPlugin {
-  type: 'transform' | 'INSERT_CODE';
+  type: 'transform';
   options?: TransformOptions;
-  code?: string;
 }
 
 // Subzero component types mapping
